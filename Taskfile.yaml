@@ -1,0 +1,42 @@
+version: "3"
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+  build:
+    desc: Build the websocket server binary
+    dir: ./cmd
+    cmds:
+      - go build -o ../bin/server .
+  run:
+    desc: Run the websocket server directly
+    dir: ./cmd
+    cmds:
+      - go run .
+  server:
+    desc: Shortcut to run server command
+    dir: ./cmd
+    cmds:
+      - go run . server theme
+  client:
+    desc: Run the client command (example)
+    dir: ./cmd
+    cmds:
+      - go run . client theme
+  tidy:
+    desc: Run go mod tidy
+    cmds:
+      - go mod tidy
+  fmt:
+    desc: Format code
+    cmds:
+      - go fmt ./...
+  lint:
+    desc: Example lint task
+    cmds:
+      - golangci-lint run ./...
+  clean:
+    desc: Remove build output
+    cmds:
+      - rm -rf bin/
