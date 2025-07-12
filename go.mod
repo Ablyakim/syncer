@@ -1,4 +1,4 @@
-module syncer
+module github.com/Ablyakim/syncer
 
 go 1.24.4
 

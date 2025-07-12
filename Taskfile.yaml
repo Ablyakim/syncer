@@ -6,7 +6,7 @@ tasks:
       - task --list
   build:
     desc: Build the websocket server binary
-    dir: ./cmd
+    dir: ./cmd/app
     cmds:
       - go build -o ../bin/server .
   run:
@@ -16,12 +16,12 @@ tasks:
       - go run .
   server:
     desc: Shortcut to run server command
-    dir: ./cmd
+    dir: ./cmd/app
     cmds:
       - go run . server theme
   client:
     desc: Run the client command (example)
-    dir: ./cmd
+    dir: ./cmd/app
     cmds:
       - go run . client theme
   tidy:

@@ -12,7 +12,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-func client(addr, path string) {
+func Client(addr, path string) {
 	flag.Parse()
 	log.SetFlags(0)
 
