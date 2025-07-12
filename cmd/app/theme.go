@@ -11,8 +11,11 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+// TODO hack
+const watcher = "/etc/profiles/per-user/ab/bin/theme-watcher.swift"
+
 func watchTheme(ctx context.Context) {
-	cmd := exec.CommandContext(ctx, swiftScript)
+	cmd := exec.CommandContext(ctx, watcher)
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		log.Fatal(err)
@@ -38,7 +41,7 @@ func watchTheme(ctx context.Context) {
 }
 
 func getCurrentTheme(ctx context.Context) ([]byte, error) {
-	cmd := exec.CommandContext(ctx, swiftScript, "get")
+	cmd := exec.CommandContext(ctx, watcher, "get")
 
 	var out bytes.Buffer
 	cmd.Stdout = &out

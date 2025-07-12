@@ -9,8 +9,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-const swiftScript = "/Users/ab/Projects/Personal/syncer/platform/mac/theme.swift"
-
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
