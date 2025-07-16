@@ -18,12 +18,12 @@ tasks:
     desc: Shortcut to run server command
     dir: ./cmd/app
     cmds:
-      - go run . server theme
+      - go run . server theme --addr '0.0.0.0:9090'
   client:
     desc: Run the client command (example)
     dir: ./cmd/app
     cmds:
-      - go run . client theme
+      - go run . client theme --addr '0.0.0.0:9090'
   tidy:
     desc: Run go mod tidy
     cmds:
