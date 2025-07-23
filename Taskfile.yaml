@@ -18,12 +18,26 @@ tasks:
     desc: Shortcut to run server command
     dir: ./cmd/app
     cmds:
-      - go run . server theme --addr '0.0.0.0:9090'
+      - go run . server --addr '0.0.0.0:9090'
+  server-dlv:
+    desc: Shortcut to run server command
+    dir: ./cmd/app
+    cmds:
+      - dlv debug -- server --addr '0.0.0.0:9090'
   client:
     desc: Run the client command (example)
     dir: ./cmd/app
     cmds:
       - go run . client theme --addr '0.0.0.0:9090'
+  client-clip:
+    desc: Run the client command (example)
+    dir: ./cmd/app
+    cmds:
+      - go run . client clip --addr '0.0.0.0:9090'
+  clip:
+    dir: ./cmd/clip
+    cmds:
+      - go run .
   tidy:
     desc: Run go mod tidy
     cmds:

@@ -33,7 +33,7 @@ func main() {
 					},
 				},
 				Action: func(_ context.Context, cmd *cli.Command) error {
-					server(cmd.String("addr"), cmd.StringArg("path"))
+					server(cmd.String("addr"))
 					return nil
 				},
 			},

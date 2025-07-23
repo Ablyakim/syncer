@@ -1,2 +1,4 @@
 bin/server
 vendor
+__debug_*
+bin/*
