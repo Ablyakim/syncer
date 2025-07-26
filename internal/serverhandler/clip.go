@@ -3,8 +3,9 @@ package serverhandler
 import (
 	"bytes"
 	"context"
-	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"sync"
 
 	"github.com/Ablyakim/syncer/internal/server"
@@ -13,13 +14,18 @@ import (
 	"golang.design/x/clipboard"
 )
 
+var (
+	infoLog  = log.New(os.Stdout, "INFO: ", log.LstdFlags)
+	errorLog = log.New(os.Stderr, "ERROR: ", log.LstdFlags)
+)
+
 type HandleFunc func(w http.ResponseWriter, r *http.Request)
 
 func ClipHandler(w http.ResponseWriter, r *http.Request) {
 	hub := server.NewHub()
 	c, err := server.Upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		fmt.Print("upgrade:", err)
+		errorLog.Print(err)
 		return
 	}
 	defer c.Close()
@@ -29,7 +35,7 @@ func ClipHandler(w http.ResponseWriter, r *http.Request) {
 	hub.RegisterConnection(ci)
 	defer hub.RemoveConnection(ci)
 	if err = clipboard.Init(); err != nil {
-		fmt.Println(err)
+		errorLog.Println(err)
 		return
 	}
 
@@ -41,14 +47,14 @@ func ClipHandler(w http.ResponseWriter, r *http.Request) {
 		for data := range ch {
 			mu.Lock()
 			if !bytes.Equal(currData, data) {
-				fmt.Printf("Read from clipboard bytes=%d\n", len(data))
+				infoLog.Printf("Read from clipboard bytes=%d\n", len(data))
 				currData = data
 				err = hub.WriteMessage(connID, websocket.TextMessage, data)
 				if err != nil {
-					fmt.Println(err)
+					errorLog.Println(err)
 				}
 			} else {
-				fmt.Println("Clipboard synced")
+				infoLog.Println("Clipboard synced")
 			}
 			mu.Unlock()
 		}
@@ -56,7 +62,7 @@ func ClipHandler(w http.ResponseWriter, r *http.Request) {
 
 	hub.Listen(ci, func(_ int, message []byte) {
 		mu.Lock()
-		fmt.Printf("Received clip from server bytes=%d\n", len(message))
+		infoLog.Printf("Received clip from server bytes=%d\n", len(message))
 		currData = message
 		clipboard.Write(clipboard.FmtText, currData)
 		mu.Unlock()

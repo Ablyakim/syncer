@@ -31,7 +31,7 @@ func ClipClient(wsCon *websocket.Conn, _ *http.Response) <-chan struct{} {
 				errorLog.Println("Error", err)
 				return
 			}
-			infoLog.Printf("Retrieved clip from mac %s\n", message)
+			infoLog.Printf("Retrieved clip from mac bytes=%d\n", len(message))
 
 			sendToTmux(message)
 		}

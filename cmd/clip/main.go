@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"io"
+	"log"
 	"net"
 	"os"
 )
@@ -17,6 +17,6 @@ func main() {
 	_, err = io.Copy(conn, os.Stdin)
 
 	if err != nil {
-		fmt.Println("Error copy", err)
+		log.Println("Error copy", err)
 	}
 }
